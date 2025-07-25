@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OAuth2 Redirect</title>
+  <script>
+    // Parse access_token from URL fragment
+    function getAccessToken() {
+      const hash = window.location.hash;
+      const params = new URLSearchParams(hash.substring(1));
+      return params.get('access_token');
+    }
+    const token = getAccessToken();
+    if (token) {
+      // Send token to background script
+      chrome.runtime.sendMessage({ type: 'OAUTH2_TOKEN', token });
+    }
+    window.close();
+  </script>
+</head>
+<body>
+  <p>Authenticating...</p>
+</body>
+</html>
